@@ -1,0 +1,102 @@
+
+
+
+
+
+<div class="chatMain" >
+    
+    <a href="javascript:history.back()"style="font-size: 30px; float: left; padding: 40px 20px; color: white; text-decoration: none; ">&larr;</a>
+    <h1 id="user"><%= user.username %></h1>
+    <h1 hidden id="userId"><%= user._id %></h1>
+    <div  id="messages" >
+            
+            <div></div>
+    </div>
+    <form id="form" action="">
+        
+        <input  id="input" type="text"placeholder="Message.."  required>
+        <button onclick="scrollToBottom()"  id="sendbtn"><b>&#10914;</b></button>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    let socket = io();
+    let logedinUsername = "<%= logedinUser %>"
+       const user = document.getElementById("user")
+       const username = user.textContent
+
+       const fetchMessages = async()=>{
+        try {
+            const response  =  await fetch(`http://localhost:3000/getMessage/${username}/${logedinUsername}`)
+            const data = await  response.json()
+            console.log(data)
+            data.forEach((msg)=>{
+              renderMessage(msg)
+            })
+            scrollToBottom()
+        } catch (error) {
+             
+        }
+       }
+        
+       fetchMessages()
+
+       
+       socket.emit("register",logedinUsername)
+       console.log(username,'usernameeeeeeeeeee');
+       window.scrollTo(0,document.body.scrollHeight)
+    
+        // fetch(`/getMessage?user1=$(logedinUsername)&user2=$(username)`)
+        // .then (response=>response.json())
+        // .then (message=>{
+        //     document
+        // })
+
+       function scrollToBottom() {
+    const messages = document.getElementById('messages');
+    const offset = 0;
+    messages.scrollTo({
+      top: messages.scrollHeight, 
+      
+      behavior: 'smooth'           
+    });
+  }
+
+
+
+
+    
+    form.addEventListener('submit',(e)=>{
+        e.preventDefault();
+        if(input.value){
+            const userId = document.getElementById('userId').textContent
+            socket.emit('private_message',{to:username,message:input.value, sender:logedinUsername});
+            const div = document.getElementById("messages");
+            div.innerHTML += `<p id='sender'>${input.value}</p> `
+            input.value='';
+        }
+    });
+    socket.on('private_message',(msg)=>{
+         renderMessage(msg)
+        // window.scrollTo(0,document.body.scrollHeight)
+    });
+
+    const renderMessage = (msg)=>{
+        console.log(msg,"rc")
+        let item = document.createElement('p')
+        if(msg.sender == logedinUsername ) item.setAttribute('id','sender')
+        else item.setAttribute('id','receiver')
+        item.textContent=msg.message;
+        document.getElementById('messages').appendChild(item);
+    }
+</script>
+
+ 

@@ -1,0 +1,43 @@
+<div class="postPlace" style="height: 600px;overflow-y: auto; ">
+    
+
+
+
+    
+
+<div class="admin-title">
+    <h2>Posts</h2>
+
+    <!-- <a href="/users-add-post" class="button">+ Add New</a> -->
+</div>
+
+<section class="articles ">
+
+    <ul class="article-ul" >
+        <% data.forEach(post => { %>
+           
+        
+            <li  ><a href="/post/<%=  post._id %>" class="a" >
+                
+                    <span><%=  post.title %></span>
+                    <p>~ <%= post.author.username %></p>
+                    <span class="article-list__date"><%=  post.createdAt.toDateString() %></span>
+               
+               
+            </a></li>
+         
+
+
+
+            
+
+
+
+        <% }) %>
+        
+    </ul>
+
+
+
+</section>
+</div>
