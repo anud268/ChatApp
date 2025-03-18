@@ -22,7 +22,7 @@ const authMiddleWare = (req, res, next) =>{
 
 
 const adminOnly= async(req,res,next)=>{
-    const userId= await extractDataFromToken(req,res)
+    const userId= req.userId
     const user=await User.findById(userId)
     
   
@@ -48,7 +48,7 @@ const adminOnly= async(req,res,next)=>{
 
 const userOnly = async (req, res, next) => {
     try {
-        const userId = await extractDataFromToken(req, res);
+        const userId = req.userId
         const user = await User.findById(userId);
 
         if (!user) {
@@ -68,19 +68,6 @@ const userOnly = async (req, res, next) => {
 };
 
 
-const extractDataFromToken = (req, res,next) => {
-    try {
-        const token = req.cookies.token || req.header("Authorization")?.replace("Bearer ", "");
-        if (!token) {
-            return res.status(401).json({ error: "Access denied. No token provided." });
-        }
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const { userId, role, name } = decoded;
-         return userId
-    } catch (error) {
-        console.error("Token verification error:", error);
-        res.status(400).json({ error: "Invalid oken." });
-    }
-};
+
 
 module.exports={authMiddleWare,adminOnly, userOnly} 

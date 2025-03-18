@@ -26,7 +26,19 @@ body
 }
 
 
+@media only screen and (max-width: 452px){
+    body
+{
+  /* overflow:hidden; */
+  /* background-color:#000030; */
+  background-image:url("https://images.pexels.com/photos/3695799/pexels-photo-3695799.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+  
+  background-size:100%;
+  background-position:center;
+  
+}
 
+}
 
 
 
