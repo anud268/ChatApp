@@ -197,7 +197,6 @@ const postCreatePost =async (req, res) => {
 
     try{
          const userId= req.userId;
-         console.log(userId,'.....................................');
          
          const {title,body}=req.body
         console.log(req.body.title);  
@@ -283,20 +282,6 @@ const deletePost =  async (req, res) => {
 
 
 
-// const   extractDataFromToken = (req, res,next) => {
-//     try {
-//         const token = req.cookies.token || req.header("Authorization")?.replace("Bearer ", "");
-//         if (!token) {
-//             return res.status(401).json({ error: "Access denied. No token provided." });
-//         }
-//         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-//         const { userId, role, name } = decoded;
-//          return userId
-//     } catch (error) {
-//         console.error("Token verification error:", error);
-//         res.status(400).json({ error: "Invalid oken." });
-//     }
-// };
 
 //get post for search
 
@@ -463,95 +448,96 @@ const verifyOtp = async (req,res)=>{
 }
 
 
-// ----------------------admin---------------------
+// // ----------------------admin---------------------
 
 
-//admin get dashboard
-const getAdminDashboard = async (req, res) => {
+// //admin get dashboard
+// const getAdminDashboard = async (req, res) => {
 
-    try{
-        const locals={
-            title: 'Dashboard',
-            description: 'simple blog created with nodejs, express & mongoDB.'
-        }
-        const data = await Post.find().populate("author","username")     
-        const users = await User.countDocuments() 
-        const posts = await Post.countDocuments() 
-        
+//     try{
+//         const locals={
+//             title: 'Dashboard',
+//             description: 'simple blog created with nodejs, express & mongoDB.'
+//         }
+//         const data = await Post.find().populate("author","username")     
+//         const users = await User.countDocuments() 
+//         const posts = await Post.countDocuments() 
+//         const del = await Post.find({ status: false }).countDocuments();
             
-        res.render('admin/admin-dashboard',{
-            locals,
-            data,
-            users,
-            posts,
-            layout :adminLayout
-        });
-    }catch(error){
-        return res.status(400).render('error',{errorMessage:"Server Error"})
-    }
+//         res.render('admin/admin-dashboard',{
+//             locals,
+//             data,
+//             users,
+//             posts,
+//             del,
+//             layout :adminLayout
+//         });
+//     }catch(error){
+//         return res.status(400).render('error',{errorMessage:"Server Error"})
+//     }
     
-}
+// }
 
 
-//admin edit post
+// //admin edit post
 
-const adminEditpost = async (req, res) => {
+// const adminEditpost = async (req, res) => {
 
-    try{
-        const locals={
-            title: 'Edit Post',
-            description: 'simple blog created with nodejs, express & mongoDB.'
-        }
-        const data = await Post.findOne({_id: req.params.id});
-        res.render('admin/edit-post',{
-            locals,
-            data,
-            layout :adminLayout
-        });
-    }catch(error){
-        return res.status(400).render('error',{errorMessage:"Server Error"})
-    }
+//     try{
+//         const locals={
+//             title: 'Edit Post',
+//             description: 'simple blog created with nodejs, express & mongoDB.'
+//         }
+//         const data = await Post.findOne({_id: req.params.id});
+//         res.render('admin/edit-post',{
+//             locals,
+//             data,
+//             layout :adminLayout
+//         });
+//     }catch(error){
+//         return res.status(400).render('error',{errorMessage:"Server Error"})
+//     }
     
-}
+// }
 
-//post admin edit post
+// //post admin edit post
 
-const postAdminEditPost = async (req, res) => {
+// const postAdminEditPost = async (req, res) => {
 
-    try{
-        await Post.findByIdAndUpdate(req.params.id,{
-            title:req.body.title,
-            body:req.body.body,
-            updateAt: Date.now()
-        })
-        res.redirect('/admin-dashboard');
+//     try{
+//         await Post.findByIdAndUpdate(req.params.id,{
+//             title:req.body.title,
+//             body:req.body.body,
+//             updateAt: Date.now()
+//         })
+//         res.redirect('/admin-dashboard');
        
-    }catch(error){
-        return res.status(400).render('error',{errorMessage:"Server Error"})
-    }
+//     }catch(error){
+//         return res.status(400).render('error',{errorMessage:"Server Error"})
+//     }
     
-}
+// }
 
-//delete post
+// //delete post
 
-const adminDeletePost = async (req, res) => {
-    try {
-        const post = await Post.findById(req.params.id);
+// const adminDeletePost = async (req, res) => {
+//     try {
+//         const post = await Post.findById(req.params.id);
         
-        if (!post) {
-            return res.status(404).render('error', { errorMessage: "Post not found" });
-        }
-console.log(post);
+//         if (!post) {
+//             return res.status(404).render('error', { errorMessage: "Post not found" });
+//         }
+// console.log(post);
 
         
-        await Post.findByIdAndUpdate ( { _id: req.params.id},{status:"false"},{new:true})
-        console.log(`Post with id ${req.params.id} deleted successfully`);
-        res.redirect('/admin-dashboard');
-    } catch (error) {
-        console.error(error);
-        return res.status(500).render('error', { errorMessage: "Server Error" });
-    }
-};
+//         await Post.findByIdAndUpdate ( { _id: req.params.id},{status:"false"},{new:true})
+//         console.log(`Post with id ${req.params.id} deleted successfully`);
+//         res.redirect('/admin-dashboard');
+//     } catch (error) {
+//         console.error(error);
+//         return res.status(500).render('error', { errorMessage: "Server Error" });
+//     }
+// };
 
 
 
@@ -562,38 +548,53 @@ console.log(post);
 
 
 
-const getmessenger=  async (req, res) => {
-    try {
-        const userId = req.userId
-        const data = await User.find({ _id: { $ne: userId } });
-        const mydata = await User.find({ _id: { $eq: userId } });
+// const getmessenger=  async (req, res) => {
+//     try {
+//         const userId = req.userId
+//         const data = await User.find({ _id: { $ne: userId } });
+//         const mydata = await User.find({ _id: { $eq: userId } });
         
       
         
-        res.render('users/messenger',{mydata: mydata,user:data,layout: messLayout});
+//         res.render('users/messenger',{mydata: mydata,user:data,layout: messLayout});
         
 
-    } catch (error) {
-        console.log(error);
-        return res.status(400).render('error',{errorMessage:"Server Error"})
-    }
-}
-const chat = async (req, res) => {
+//     } catch (error) {
+//         console.log(error);
+//         return res.status(400).render('error',{errorMessage:"Server Error"})
+//     }
+// }
+// const chat = async (req, res) => {
 
-    try{
-        console.log(req.userId)
-        let id = req.params.id;
-        const user=await User.findById(id)
+//     try{
+//         console.log(req.userId)
+//         let id = req.params.id;
+//         const user=await User.findById(id)
         
-        const logedinUser = await User.findById(req.userId)
-        res.render('chat',{user:user,logedinUser:logedinUser.username,layout: otpLayout});
+//         const logedinUser = await User.findById(req.userId)
+//         res.render('chat',{user:user,logedinUser:logedinUser.username,layout: otpLayout});
 
        
-    }catch(error){
-        return res.status(400).render('error',{errorMessage:"Server Error"})
-    }
+//     }catch(error){
+//         return res.status(400).render('error',{errorMessage:"Server Error"})
+//     }
     
-}
+// }
+// const messages = async (req,res)=>{
+//     const { receiver ,logedinUser} = req.params;
+//     console.log(receiver,logedinUser,"reciever") 
+    
+//     try {
+//         const message = await Chat.find({$or:[
+//             {sender:logedinUser,receiver:receiver},
+//             {sender:receiver,receiver:logedinUser}
+//         ]}).sort({createdAt:1});
+//         console.log(message,"messages")
+//         res.json(message)
+//     } catch (error) {
+//         console.log(error.message)
+//     }
+// }
 
 
 
@@ -611,18 +612,15 @@ module.exports = {
     postPostSearch,
     getSignup,
     postSignup,
-    getAdminDashboard,
-    adminEditpost,
-    postAdminEditPost,
-    adminDeletePost,
-    chat,
+    
     
 
-    getmessenger,
+    
     verifyOtp,
     checkUser,
-    logout
+    logout,
 
+    
 
 
 };

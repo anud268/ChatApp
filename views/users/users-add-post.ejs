@@ -7,9 +7,9 @@
 <form action="/users-add-post" method="POST" >
 
     <label for="title"><b>Title</b></label>
-    <input type="text" placeholder="Post Title" name="title">
+    <input type="text" placeholder="Post Title" name="title" required>
     <label for="body"><b>Content</b></label>
-    <textarea name="body" cols="50" rows="10"></textarea>
+    <textarea name="body" cols="50" rows="10" required></textarea>
 
     <!-- <label for="body"><b>Image</b></label>
     <input type="file" placeholder="Image" name="image" onchange="handleImageChange(event)" accept="image/*">

@@ -8,12 +8,9 @@
     <a href="javascript:history.back()"style="font-size: 30px; float: left; padding: 40px 20px; color: white; text-decoration: none; ">&larr;</a>
     <h1 id="user"><%= user.username %></h1>
     <h1 hidden id="userId"><%= user._id %></h1>
-    <div  id="messages" >
-            
-            <div></div>
-    </div>
+    <div  id="messages"></div>
+        <div id="bottom"></div>
     <form id="form" action="">
-        
         <input  id="input" type="text"placeholder="Message.."  required>
         <button onclick="scrollToBottom()"  id="sendbtn"><b>&#10914;</b></button>
     </form>
@@ -35,13 +32,13 @@
 
        const fetchMessages = async()=>{
         try {
-            const response  =  await fetch(`http://localhost:3000/getMessage/${username}/${logedinUsername}`)
+            const response  =  await fetch(`https://chatapp-g5nk.onrender.com/getMessage/${username}/${logedinUsername}`)
             const data = await  response.json()
-            console.log(data)
+            console.log(data,)
             data.forEach((msg)=>{
               renderMessage(msg)
             })
-            scrollToBottom()
+            
         } catch (error) {
              
         }
@@ -52,13 +49,14 @@
        
        socket.emit("register",logedinUsername)
        console.log(username,'usernameeeeeeeeeee');
-       window.scrollTo(0,document.body.scrollHeight)
+    //    window.scrollTo(0,document.body.scrollHeight)
     
-        // fetch(`/getMessage?user1=$(logedinUsername)&user2=$(username)`)
-        // .then (response=>response.json())
-        // .then (message=>{
-        //     document
-        // })
+
+
+
+
+
+
 
        function scrollToBottom() {
     const messages = document.getElementById('messages');
@@ -66,7 +64,7 @@
     messages.scrollTo({
       top: messages.scrollHeight, 
       
-      behavior: 'smooth'           
+      behavior: 'instant'           
     });
   }
 
@@ -82,6 +80,7 @@
             const div = document.getElementById("messages");
             div.innerHTML += `<p id='sender'>${input.value}</p> `
             input.value='';
+            scrollToBottom()
         }
     });
     socket.on('private_message',(msg)=>{
@@ -96,6 +95,7 @@
         else item.setAttribute('id','receiver')
         item.textContent=msg.message;
         document.getElementById('messages').appendChild(item);
+        scrollToBottom()
     }
 </script>
 

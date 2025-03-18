@@ -9,23 +9,20 @@ const adminLayout = '../views/layouts/admin';
 const jwtSecret = process.env.JWT_SECRET;
 
 
-const controller = require('../controller/blog-controller');
+const adminController = require('../controller/admin-controller');
 
 
 
-// router.get('/', controller.adminGetLogin);
 
-// router.post('/admin', controller.adminPostLogin);
+router.get('/admin-dashboard',authMiddleWare,adminOnly, adminController.getAdminDashboard);
 
-router.get('/admin-dashboard',authMiddleWare,adminOnly, controller.getAdminDashboard);
+router.get('/edit-post/:id',authMiddleWare,adminOnly, adminController.adminEditpost);
 
-router.get('/edit-post/:id',authMiddleWare,adminOnly, controller.adminEditpost);
+router.post('/edit-post/:id',authMiddleWare,adminOnly, adminController.postAdminEditPost);
 
-router.post('/edit-post/:id',authMiddleWare,adminOnly, controller.postAdminEditPost);
+router.post('/delete-post/:id',authMiddleWare,adminOnly, adminController.adminDeletePost);
 
-router.post('/delete-post/:id',authMiddleWare,adminOnly, controller.adminDeletePost);
-
-router.get('/logout', controller.logout);
+router.get('/logout', adminController.adminLogout);
 
 
 

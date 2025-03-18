@@ -37,9 +37,9 @@
 <form action="/users-edit-post/<%= data._id %>"    method="POST">
 
     <label for="title"><b>Title</b></label>
-    <input type="text" placeholder="Post Title" name="title" value="<%= data.title %>">
+    <input type="text" placeholder="Post Title" name="title" value="<%= data.title %>" required>
     <label for="body"><b>Content</b></label>
-    <textarea name="body" cols="50" rows="10"><%= data.body %></textarea>
+    <textarea name="body" cols="50" rows="10"required><%= data.body %> </textarea>
 
   <a href="/myposts"> <input type="submit" value="Update" class="btn" ></a> 
 

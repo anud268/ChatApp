@@ -25,17 +25,7 @@ connectDB();
 app.use(express.urlencoded({extended:true})) 
 app.use(express.json());
 app.use(cookieParser()) 
-// app.use(methodOverride('_method'))
- 
-// app.use(session({
-//     secret : 'keybord cat',
-//     resave: false,
-//     saveUninitialized: true,
-//     store:MongoStore.create({
-//         mongoUrl:process.env.MONGODB_URL
-//     }),
-      
-// }));
+
 app.use(session({
   secret: 'your-secret-key',
   resave: false,
@@ -75,12 +65,18 @@ io.on('connection',(socket)=>{
   socket.on('register', (username) => {
     
     users[username] = socket.id;
+    console.log(users);
+    
   
 });
   
 socket.on('private_message',async (data) => {
   const { to, message, sender } = data;
+  console.log(data);
+  
   const toSocketId = users[to]; 
+  console.log(users);
+  
   const chatMessage = new Chat ({message,sender,receiver:to})
   await chatMessage.save()
 
@@ -100,7 +96,7 @@ socket.on('private_message',async (data) => {
   // socket.on('disconnect',()=>{
   //   console.log('socket disconnected');
     
-  
+   
   // })
   
 })

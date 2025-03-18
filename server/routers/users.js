@@ -12,62 +12,9 @@ const multer = require('multer');
 const path = require('path');
 
 const controller = require('../controller/blog-controller');
-const authController = require('../controller/auth-controller');
+const authController = require('../controller/chat-controller');
 
  
-
-// image upload
-
-// const storage = multer.diskStorage({
-//     destination: (req,file,cb)=>{
-//         cb(null,"public/uploads")
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
-//     }
-// });
-// const fileFilter = (req, file, cb) => {
-//     const allowedTypes = /jpeg|jpg|png/;
-//     const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-//     const mimetype = allowedTypes.test(file.mimetype);
-//     if (extname && mimetype) {
-//         return cb(null, true);
-//     } else {
-//         return (new Error("Only JPEG and PNG images are allowed!"), false);
-//     }
-// };
-// const upload = multer({ storage: storage, fileFilter: fileFilter });
-// // Configure Multer Storage
-// const storages = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, "public/uploads"); // Save images in 'uploads' folder
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, Date.now() + path.extname(file.originalname)); // Unique filename
-//     },
-// });
-// const Upload = multer({ dest: "public/uploads" });
-
-
-// router.post('/users-add-post', upload.single('image'), async (req, res) => {
-//     try {
-//         console.log(req.body);
-        
-//         const { title, body } = req.body;
-//         const image = req.file.filename;
-//         const userId = extractDataFromToken(req, res);
-//         const data = await Post.create({
-//             title,
-//             body,
-//             author,
-//             image
-//         });
-//         res.redirect('/uDashboard',{data});
-//     } catch (error) {
-//         console.log(error);
-//     }
-// });
-
 
 
 
