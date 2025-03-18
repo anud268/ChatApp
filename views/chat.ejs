@@ -11,7 +11,7 @@
     <div  id="messages"></div>
         <div id="bottom"></div>
     <form id="form" action="">
-        <input  id="input" type="text"placeholder="Message.."  required>
+        <input  id="input" type="text"placeholder="Message.."  required onclick="keybordFocus()">
         <button onclick="scrollToBottom()"  id="sendbtn"><b>&#10914;</b></button>
     </form>
 </div>
@@ -53,9 +53,14 @@
     
 
 
+       function keybordFocus(){
+        let inputFocus = document.getElementById('input')
+        inputFocus.focus()
+       }
 
-
-
+       window.onload = function() {
+            keyboardFocus();
+        };
 
 
        function scrollToBottom() {
