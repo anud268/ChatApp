@@ -1,107 +1,98 @@
-
-
-
-
-
-<div class="chatMain" >
-    
-    <a href="javascript:history.back()"style="font-size: 30px; float: left; padding: 40px 20px; color: white; text-decoration: none; ">&larr;</a>
-    <h1 id="user"><%= user.username %></h1>
-    <h1 hidden id="userId"><%= user._id %></h1>
-    <div  id="messages"></div>
-        <div id="bottom"></div>
-    <form id="form" action="">
-        <input  id="input" type="text"placeholder="Message.."  required onclick="keybordFocus()">
-        <button onclick="scrollToBottom()"  id="sendbtn"><b>&#10914;</b></button>
-    </form>
+<div class="chatMain">
+  <a
+    href="javascript:history.back()"
+    style="
+      font-size: 30px;
+      float: left;
+      padding: 40px 20px;
+      color: white;
+      text-decoration: none;
+    "
+    >&larr;</a
+  >
+  <h1 id="user"><%= user.username %></h1>
+  <h1 hidden id="userId"><%= user._id %></h1>
+  <div id="messages"></div>
+  <div id="bottom"></div>
+  <form id="form" action="">
+    <input
+      id="input"
+      type="text"
+      placeholder="Message.."
+      required
+      onclick="keybordFocus()"
+    />
+    <button onclick="scrollToBottom()" id="sendbtn"><b>&#10914;</b></button>
+  </form>
 </div>
-
-
-
-
-
-
-
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    let socket = io();
-    let logedinUsername = "<%= logedinUser %>"
-       const user = document.getElementById("user")
-       const username = user.textContent
+  let socket = io();
+  let logedinUsername = "<%= logedinUser %>";
+  const user = document.getElementById("user");
+  const username = user.textContent;
 
-       const fetchMessages = async()=>{
-        try {
-            const response  =  await fetch(`https://chatapp-g5nk.onrender.com/getMessage/${username}/${logedinUsername}`)
-            const data = await  response.json()
-            console.log(data,)
-            data.forEach((msg)=>{
-              renderMessage(msg)
-            })
-            
-        } catch (error) {
-             
-        }
-       }
-        
-       fetchMessages()
+  const fetchMessages = async () => {
+    try {
+      const response = await fetch(
+        `https://chatapp-g5nk.onrender.com/getMessage/${username}/${logedinUsername}`
+      );
+      const data = await response.json();
+      data.forEach((msg) => {
+        renderMessage(msg);
+      });
+    } catch (error) {}
+  };
 
-       
-       socket.emit("register",logedinUsername)
-       console.log(username,'usernameeeeeeeeeee');
-    //    window.scrollTo(0,document.body.scrollHeight)
-    
+  fetchMessages();
 
+  socket.emit("register", logedinUsername);
 
-       function keybordFocus(){
-        let inputFocus = document.getElementById('input')
-        inputFocus.focus()
-       }
+  function keybordFocus() {
+    let inputFocus = document.getElementById("input");
+    inputFocus.focus();
+  }
 
-       window.onload = function() {
-            keyboardFocus();
-        };
+  window.onload = function () {
+    keyboardFocus();
+  };
 
-
-       function scrollToBottom() {
-    const messages = document.getElementById('messages');
+  function scrollToBottom() {
+    const messages = document.getElementById("messages");
     const offset = 0;
     messages.scrollTo({
-      top: messages.scrollHeight, 
-      
-      behavior: 'instant'           
+      top: messages.scrollHeight,
+
+      behavior: "instant",
     });
   }
 
-
-
-
-    
-    form.addEventListener('submit',(e)=>{
-        e.preventDefault();
-        if(input.value){
-            const userId = document.getElementById('userId').textContent
-            socket.emit('private_message',{to:username,message:input.value, sender:logedinUsername});
-            const div = document.getElementById("messages");
-            div.innerHTML += `<p id='sender'>${input.value}</p> `
-            input.value='';
-            scrollToBottom()
-        }
-    });
-    socket.on('private_message',(msg)=>{
-         renderMessage(msg)
-        // window.scrollTo(0,document.body.scrollHeight)
-    });
-
-    const renderMessage = (msg)=>{
-        console.log(msg,"rc")
-        let item = document.createElement('p')
-        if(msg.sender == logedinUsername ) item.setAttribute('id','sender')
-        else item.setAttribute('id','receiver')
-        item.textContent=msg.message;
-        document.getElementById('messages').appendChild(item);
-        scrollToBottom()
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (input.value) {
+      const userId = document.getElementById("userId").textContent;
+      socket.emit("private_message", {
+        to: username,
+        message: input.value,
+        sender: logedinUsername,
+      });
+      const div = document.getElementById("messages");
+      div.innerHTML += `<p id='sender'>${input.value}</p> `;
+      input.value = "";
+      scrollToBottom();
     }
-</script>
+  });
+  socket.on("private_message", (msg) => {
+    renderMessage(msg);
+  });
 
- 
+  const renderMessage = (msg) => {
+    let item = document.createElement("p");
+    if (msg.sender == logedinUsername) item.setAttribute("id", "sender");
+    else item.setAttribute("id", "receiver");
+    item.textContent = msg.message;
+    document.getElementById("messages").appendChild(item);
+    scrollToBottom();
+  };
+</script>

@@ -7,23 +7,31 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color:#fef6f7;
+            background-color:#fef6f700;
             text-align: center;
             padding: 50px;
+            /* background-image: url('https://images.pexels.com/photos/5849597/pexels-photo-5849597.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); */
+            /* background-image: url('https://images.pexels.com/photos/8363050/pexels-photo-8363050.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); */
+            background-size:cover;
+            background-position:center;
         }
         .error-container {
-            background: rgba(255, 255, 255, 0);
+            background: rgba(0, 0, 0, 0.066);
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.571);
             display: inline-block;
         }
         h1 {
             color: #ffffff;
+            text-shadow: 3px 3px 10px rgb(0, 0, 0);
+            font-size: 50px;
+            margin: 10px;
         }
         p {
             color: #ffffff;
-            font-size: 18px;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.411);
+            font-size: 30px;
         }
         a {
             text-decoration: none;
@@ -34,9 +42,10 @@
 </head>
 <body>
     <div class="error-container">
+        <h1 >404</h1>
         <h1>Oops! An Error Occurred</h1>
         <p><%= errorMessage %></p>
-        <a href="javascript:history.back()">&larr;Back</a>
+        <a href="/">&larr;Back To Home</a>
     </div>
 </body>
 </html>

@@ -1,13 +1,18 @@
 <div class="searchBar" id="searchBarClose">
-    <div class="container" >
-        <form action="/search" class="search__form" role="search" method="POST">
-            <div style="display: flex; justify-content: space-evenly;">
-                <input type="search" aria-label="search" id="searchInput" name="searchTerm" placeholder="Search the site.." >
-                <button   type="submit" class=" submitBtn">Search</button>
-                <div id="searchClose"   >x</div>
-            </div>
-            
-        </form>
-        
-    </div>
+  <div class="container">
+    <form action="/search" class="search__form" role="search" method="POST">
+      <div style="display: flex; justify-content: space-evenly">
+        <input
+          type="search"
+          aria-label="search"
+          id="searchInput"
+          name="searchTerm"
+          placeholder="Search the site.." 
+          required
+        />
+        <button type="submit" class="submitBtn"  >Search</button>
+        <div id="searchClose" onclick="reset()">x</div>
+      </div>
+    </form>
+  </div>
 </div>

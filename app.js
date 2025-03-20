@@ -1,13 +1,10 @@
 require ('dotenv').config();
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
-const methodOverride = require('method-override')
 const cookieParser = require ('cookie-parser');
 const mongoStore =  require ('connect-mongo');
 const connectDB = require('./server/config/db.js');
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
-const flash = require('connect-flash'); 
 const Chat = require('./server/models/Chat.js')
 
 
@@ -42,12 +39,12 @@ app.set('layout', './layouts/main');
 app.set('view engine', 'ejs');
 
 
-app.use('/', require('./server/routers/admin'));
+app.use('/admin', require('./server/routers/admin'));
 app.use('/', require('./server/routers/users'));
-app.use('/', require('./server/routers/messenger'));
+app.use('/messenger', require('./server/routers/messenger'));
 
 app.use((req, res, next) => {
-    res.status(404).send('404: Page Not Found'); 
+  res.status(404).render('errorNotFound', { errorMessage: ' Page Not Found' });
   });
 
 const server = app.listen(PORT, () => {
@@ -93,11 +90,7 @@ socket.on('private_message',async (data) => {
   }
 });
 
-  // socket.on('disconnect',()=>{
-  //   console.log('socket disconnected');
-    
-   
-  // })
+
   
 })
 

@@ -1,43 +1,42 @@
-
 <div class="searchBarr">
-    <div class="container" >
-        <form action="/search" class="search__form" role="search" method="POST">
-            <div style="display: flex; justify-content: space-evenly;">
-                <input type="search" aria-label="search" id="searchInput" name="searchTerm" placeholder="Search the site.." >
-                <button   type="submit" class=" submitBtn" >Search</button>
-               
-            </div>
-            
-        </form>
-        
-    </div>
+  <div class="container">
+    <form action="/search" class="search__form" role="search" method="POST">
+      <div style="display: flex; justify-content: space-evenly">
+        <input
+          type="search"
+          aria-label="search"
+          id="searchInput"
+          name="searchTerm"
+          placeholder="Search the site.."
+        />
+        <button type="submit" class="submitBtn" >Search</button>
+      </div>
+    </form>
+  </div>
 </div>
-
 
 <div class="auther">
-    <div style="display: flex; justify-content: space-between;">
-        <a href="javascript:history.back()">&larr;Back</a>
-        <a href="javascript:history.forward()">Forward&rarr; </a>
-    </div>
-    <h1 class="author__heading">Search Results</h1>
-    
-    
+  <div style="display: flex; justify-content: space-between">
+    <a href="javascript:history.back()">&larr;Back</a>
+    <a href="javascript:history.forward()">Forward&rarr; </a>
+  </div>
+  <h1 class="author__heading">Search Results</h1>
 </div>
 <div class="postPlace">
-<section class="articles">
+  <section class="articles">
     <ul class="article-ul">
-        
-        <% data.forEach(post => { %>
-        
-        
-            <li>
-                <a href="/post/<%=  post._id %>">
-                    <span><%=  post.title %></span>
-                    <span class="article-list__date"><%=  post.createdAt.toDateString() %></span>
-                </a>
-            </li>
+      <% data.forEach(post => { %>
 
-        <% }) %>
+      <li>
+        <a href="/post/<%=  post._id %>">
+          <span><%= post.title %></span>
+          <span class="article-list__date"
+            ><%= post.createdAt.toDateString() %></span
+          >
+        </a>
+      </li>
+
+      <% }) %>
     </ul>
-</section>
+  </section>
 </div>

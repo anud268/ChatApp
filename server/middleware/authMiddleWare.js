@@ -33,9 +33,7 @@ const adminOnly= async(req,res,next)=>{
         }
         else{
             
-            // return res.status(404);
-             res.status(403).send('Access denied: Only Admin can access this resource');
-            
+            res.status(403).render('error',{errorMessage: 'Access denied: Only Admin can access this resource'})
         }
         
        } catch (error) {
@@ -58,11 +56,11 @@ const userOnly = async (req, res, next) => {
         if (user.role === "user") {
             next();
         } else {
-            return res.status(403).send('Access denied: Only users can access this resource');
+            res.status(403).render('error',{errorMessage: 'Access denied: Only Admin can access this resource'})
+
         }
 
     } catch (error) {
-        console.error('Error in userOnly middleware:', error);
         res.status(500).send('Internal Server Error');
     }
 };

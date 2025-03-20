@@ -1,42 +1,16 @@
-
 <div class="messenger">
-        <div class="chatHeader">
-            <h1><%= mydata[0].username.toUpperCase() %></h1> 
-        </div>
-    
-    <div class="body">
-        <!-- <div class="chatSideBar"> -->
-        
-            <ul  >
-            <% user.forEach(post => { %>
-                
-                <!-- <li > -->
-                    
-                    <a href="/chat/<%=  post._id %>">
-                        <h3 class="username" ><%= post.username %></h3>
+  <div class="chatHeader">
+    <h1><%= mydata[0].username.toUpperCase() %></h1>
+  </div>
 
-                    </a>
-                       
-                        
-                <!-- </li>    -->
-    
-            <% }) %>
-        </ul>
-    
-        <!-- </div> -->
-        
-    </div>
+  <div class="body">
+    <ul>
+      <% user.forEach(post => { %>
+      <a href="/messenger/chat/<%=  post._id %>">
+        <h3 class="username"><%= post.username %></h3>
+      </a>
 
+      <% }) %>
+    </ul>
+  </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-<!--  -->

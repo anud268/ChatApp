@@ -1,34 +1,35 @@
-const express = require('express');
-const router = express.Router();    
-const Post = require('../models/Post');
-const User = require('../models/User');
-const bcrypt = require('bcrypt')
-const jwt = require ('jsonwebtoken')
-const {authMiddleWare,adminOnly}=require("../middleware/authMiddleWare")
-const adminLayout = '../views/layouts/admin';
-const jwtSecret = process.env.JWT_SECRET;
+const express = require("express");
+const route = express.Router();
+const { authMiddleWare, adminOnly } = require("../middleware/authMiddleware");
+const adminController = require("../controller/adminController");
 
+route.get(
+  "/",
+  authMiddleWare,
+  adminOnly,
+  adminController.getAdminDashboard
+);
 
-const adminController = require('../controller/admin-controller');
+route.get(
+  "/editPost/:id",
+  authMiddleWare,
+  adminOnly,
+  adminController.adminEditpost
+);
 
-
-
-
-router.get('/admin-dashboard',authMiddleWare,adminOnly, adminController.getAdminDashboard);
-
-router.get('/edit-post/:id',authMiddleWare,adminOnly, adminController.adminEditpost);
-
-router.post('/edit-post/:id',authMiddleWare,adminOnly, adminController.postAdminEditPost);
-
-router.post('/delete-post/:id',authMiddleWare,adminOnly, adminController.adminDeletePost);
-
-router.get('/logout', adminController.adminLogout);
-
-
-
+route.post(
+  "/editPost/:id",
+  authMiddleWare,
+  adminOnly,
+  adminController.postAdminEditPost
+);
 
 
 
-
-
-module.exports= router; 
+route.post(
+  "/deletePost/:id",
+  authMiddleWare,
+  adminOnly,
+  adminController.adminDeletePost
+);
+module.exports = route;

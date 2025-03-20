@@ -1,0 +1,13 @@
+<a href="javascript:history.back()">&larr;Back</a>
+<div class="admin-title">
+  <h2>Add New Post</h2>
+</div>
+
+<form action="/addPost" method="POST">
+  <label for="title"><b>Title</b></label>
+  <input type="text" placeholder="Post Title" name="title" required />
+  <label for="body"><b>Content</b></label>
+  <textarea name="body" cols="50" rows="10" required></textarea>
+
+  <input type="submit" value="add" class="btn" />
+</form>
